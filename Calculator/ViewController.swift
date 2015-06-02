@@ -27,6 +27,14 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func appendDecimalPoint(sender: UIButton) {
+        if userInTheMiddleOfTypingANumber {
+            if display.text?.rangeOfString(".") == nil {
+                display.text = display.text! + "."
+            }
+        }
+    }
+    
     @IBAction func operate(sender: UIButton) {
         if userInTheMiddleOfTypingANumber {
             enter()
