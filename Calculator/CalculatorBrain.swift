@@ -37,12 +37,17 @@ class CalcultorBrain {
         func learnOp(op: Op) {
             knownOps[op.description] = op
         }
+        knownOps["π"] = Op.Operand(M_PI)
+        
         learnOp(Op.BinaryOperation("✕", *))
         learnOp(Op.BinaryOperation("÷") {$1 / $0})
         learnOp(Op.BinaryOperation("÷") {$1 / $0})
         learnOp(Op.BinaryOperation("+", +))
         learnOp(Op.BinaryOperation("−") {$1 - $0})
+        
         learnOp(Op.UnaryOperation("√", sqrt))
+        learnOp(Op.UnaryOperation("sin", sin))
+        learnOp(Op.UnaryOperation("cos", cos))
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {

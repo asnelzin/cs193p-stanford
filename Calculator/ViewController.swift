@@ -12,6 +12,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var history: UILabel!
     
     var userInTheMiddleOfTypingANumber: Bool = false
     
@@ -40,6 +41,7 @@ class ViewController: UIViewController {
             enter()
         }
         if let operation = sender.currentTitle {
+            history.text = "\(history.text!) \(operation)"
             if let result = brain.performOperation(operation) {
                 displayValue = result
             } else {
@@ -50,6 +52,7 @@ class ViewController: UIViewController {
     
     @IBAction func enter() {
         userInTheMiddleOfTypingANumber = false
+        history.text = "\(history.text!) \(display.text!)"
         if let result = brain.pushOperand(displayValue) {
             displayValue = result
         } else {
