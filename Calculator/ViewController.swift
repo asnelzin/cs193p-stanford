@@ -14,14 +14,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var history: UILabel!
     
+    
     var userInTheMiddleOfTypingANumber: Bool = false
     
     var brain = CalcultorBrain()
+    
+    var displayValue: Double {
+        get {
+            return (display.text! as NSString).doubleValue
+        }
+        set {
+            display.text = "\(newValue)"
+        }
+    }
 
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userInTheMiddleOfTypingANumber {
-            display.text = display.text! + digit
+            display.text! += digit
         } else {
             display.text = digit
             userInTheMiddleOfTypingANumber = true
@@ -31,17 +41,14 @@ class ViewController: UIViewController {
     @IBAction func appendDecimalPoint(sender: UIButton) {
         if userInTheMiddleOfTypingANumber {
             if display.text?.rangeOfString(".") == nil {
-                display.text = display.text! + "."
+                display.text! += "."
             }
         }
     }
     
     @IBAction func operate(sender: UIButton) {
-        if userInTheMiddleOfTypingANumber {
-            enter()
-        }
         if let operation = sender.currentTitle {
-            history.text = "\(history.text!) \(operation)"
+            self.updateHistory(operation)
             if let result = brain.performOperation(operation) {
                 displayValue = result
             } else {
@@ -52,7 +59,7 @@ class ViewController: UIViewController {
     
     @IBAction func enter() {
         userInTheMiddleOfTypingANumber = false
-        history.text = "\(history.text!) \(display.text!)"
+        self.updateHistory(display.text!)
         if let result = brain.pushOperand(displayValue) {
             displayValue = result
         } else {
@@ -60,13 +67,13 @@ class ViewController: UIViewController {
         }
     }
     
-    var displayValue: Double {
-        get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
-        }
-        set {
-            display.text = "\(newValue)"
-            userInTheMiddleOfTypingANumber = false
-        }
+    @IBAction func clear(sender: UIButton) {
+        brain.clearStack()
+        displayValue = 0
+        history.text! = ""
+    }
+    
+    func updateHistory(newValue: String) {
+        history.text = "\(history.text!) \(newValue)"
     }
 }

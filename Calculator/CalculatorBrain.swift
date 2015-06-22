@@ -10,7 +10,7 @@ import Foundation
 
 class CalcultorBrain {
     
-    private enum Op: Printable {
+    private enum Op: CustomStringConvertible {
         case Operand(Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
@@ -78,7 +78,7 @@ class CalcultorBrain {
     
     func evaluate() -> Double? {
         let (result, remainder) = evaluate(opStack)
-        println("\(opStack) = \(result) with \(remainder) left over")
+        print("\(opStack) = \(result) with \(remainder) left over")
         return result
     }
     
@@ -93,5 +93,9 @@ class CalcultorBrain {
             opStack.append(operation)
         }
         return evaluate()
+    }
+    
+    func clearStack() {
+        opStack = [Op]()
     }
 }
