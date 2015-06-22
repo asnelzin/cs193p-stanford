@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Calculator
 //
-//  Created by Nelzin Alexander on 03.02.15.
+//  Created by Alexander Alexander on 03.02.15.
 //  Copyright (c) 2015 asnelzin. All rights reserved.
 //
 
@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var history: UILabel!
-    
     
     var userInTheMiddleOfTypingANumber: Bool = false
     
